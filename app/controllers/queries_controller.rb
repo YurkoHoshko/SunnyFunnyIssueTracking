@@ -2,7 +2,7 @@ class QueriesController < ApplicationController
   include QueryHelper
 
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :only=>[:reply,:reply_update]
 
   def show
     @query = Query.find(params[:id])
