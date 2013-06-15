@@ -1,0 +1,58 @@
+- model_class = Query
+.page-header
+  %h1= t '.title', :default => model_class.model_name.human.titleize
+.well{:style => "width:350px;float:left"}
+  %h3 Ticket
+  %dl.dl-horizontal
+    %dt
+      %strong
+        = model_class.human_attribute_name(:uid)
+        \:
+    %dd= @query.uid
+    %dt
+      %strong
+        = model_class.human_attribute_name(:customer_email)
+        \:
+    %dd= @query.customer_email
+    %dt
+      %strong
+        = model_class.human_attribute_name(:customer_name)
+        \:
+    %dd= @query.customer_name
+    %dt
+      %strong
+        = model_class.human_attribute_name(:subject)
+        \:
+    %dd= @query.subject
+    %dt
+      %strong
+        = model_class.human_attribute_name(:description)
+        \:
+    %dd= @query.description.html_safe
+    %dt
+      %strong Responsible person:
+    - if @query.user_id=="0"
+      %dd Nobody assigned yet
+    - else
+      %dd= @query.user.email
+    %dt
+      %strong
+        = model_class.human_attribute_name(:department_id)
+        \:
+    %dd= @query.department.department_name
+    %dt
+      %strong
+        = model_class.human_attribute_name(:status_id)
+        \:
+    %dd= @query.status.status_name
+  .form-actions
+    = link_to t('.back', :default => t("helpers.links.back")), |
+      :back, :class => 'btn'                                   |
+    -#
+    = link_to t('.edit', :default => t("helpers.links.edit")), |
+      edit_query_path(@query), :class => 'btn'                 |
+.well{:style => "width:350px;float:left;margin-left:5px"}
+  %h3 Ticket History
+  - @changes.each do |change|
+    %strong= change.created_at
+    = change.change_description.html_safe

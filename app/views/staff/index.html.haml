@@ -1,0 +1,23 @@
+.well.span3{:style => "float:left;"}
+  %h4 Categories
+  = link_to "Unassigned tickets", unassigned_tickets_path
+  %br/
+  = link_to "Open tickets", open_tickets_path
+  %br/
+  = link_to "On HOLD tickets ", on_hold_tickets_path
+  %br/
+  = link_to "Closed tickets",closed_tickets_path
+  %br/
+.well.span4
+  = form_tag index_for_staff_path, :method =>'get' do
+    = text_field_tag :search
+    = submit_tag "Search", :name => nil, :class => 'btn btn-medium'
+.well.span3{:style => "float:left;"}
+  %h4 Administration panel
+  = link_to "Departments settings", departments_path
+  %br/
+  = link_to "Statuses settings", statuses_path
+  %br/
+= render :partial =>"uid_search"
+= render :partial =>"subject_search"
+= render :partial =>"description_search"

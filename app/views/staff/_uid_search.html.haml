@@ -1,0 +1,32 @@
+- if @uid_search
+  .well{:style => "float:left; margin:10px", :class=>"span10"}
+    %h3 Search by UID
+    %table.table.table-striped
+      %thead
+        %tr
+          %th uid
+          %th customer mail
+          %th customer name
+          %th department
+          %th description
+          %th status
+          %th subject
+          %th assigned to
+          %th= t '.actions', :default => t("helpers.actions")
+      %tbody
+        %tr
+          %td= @uid_search.uid
+          %td= @uid_search.customer_email
+          %td= @uid_search.customer_name
+          %td= @uid_search.department.department_name
+          %td= @uid_search.description.html_safe
+          %td= @uid_search.status.status_name
+          %td= @uid_search.subject
+          - if @uid_search.user_id=="0"
+            %td Nobody assigned yet
+          - else
+            %td= @uid_search.user.email
+          %td
+            = link_to "show", query_path(@uid_search),:class => 'btn btn-mini'
+            = link_to t('.edit', :default => t("reply")),       |
+              reply_path(@uid_search), :class => 'btn btn-mini' |

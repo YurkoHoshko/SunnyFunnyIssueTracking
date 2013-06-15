@@ -1,0 +1,32 @@
+.page-header
+  %h1 Closed tickets
+%table.table.table-striped
+  %thead
+    %tr
+      %th uid
+      %th customer mail
+      %th customer name
+      %th department
+      %th description
+      %th status
+      %th subject
+      %th assigned to
+      %th= t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @queries .each do |query|
+      %tr
+        %td= query.uid
+        %td= query.customer_email
+        %td= query.customer_name
+        %td= query.department.department_name
+        %td= query.description.html_safe
+        %td= query.status.status_name
+        %td= query.subject
+        - if query.user_id=="0"
+          %td Nobody assigned yet
+        - else
+          %td= query.user.email
+        %td
+          = link_to "show", query_path(query),:class => 'btn btn-mini'
+          = link_to t('.edit', :default => t("reply")), |
+            reply_path(query), :class => 'btn btn-mini' |

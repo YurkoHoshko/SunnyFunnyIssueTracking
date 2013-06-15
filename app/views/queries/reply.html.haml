@@ -1,0 +1,69 @@
+- model_class = Query
+.page-header
+  %h1 Reply
+.well{:style => "float:left;width:350px;"}
+  %h3 Ticket
+  %dl.dl-horizontal
+    %dt
+      %strong
+        = model_class.human_attribute_name(:uid)
+        \:
+    %dd= @query.uid
+    %dt
+      %strong
+        = model_class.human_attribute_name(:customer_email)
+        \:
+    %dd= @query.customer_email
+    %dt
+      %strong
+        = model_class.human_attribute_name(:customer_name)
+        \:
+    %dd= @query.customer_name
+    %dt
+      %strong
+        = model_class.human_attribute_name(:subject)
+        \:
+    %dd= @query.subject
+    %dt
+      %strong
+        = model_class.human_attribute_name(:description)
+        \:
+    %dd= @query.description.html_safe
+    %dt
+      %strong
+        = model_class.human_attribute_name(:user_id)
+        \:
+    - if @query.user_id=="0"
+      %dd Nobody assigned yet
+    - else
+      %dd= @query.user.email
+    %dt
+      %strong
+        = model_class.human_attribute_name(:department_id)
+        \:
+    %dd= @query.department.department_name
+    %dt
+      %strong
+        = model_class.human_attribute_name(:status_id)
+        \:
+    %dd= @query.status.status_name
+.well{:style => "float:left;margin-left:5px;  max-width:500px;"}
+  %h3 Add Reply
+  = form_for @query, :html => { :class => 'form-horizontal' }, :method=>:put, :url=>"reply_update"  do |f|
+    .control-group
+      = f.label "Status", :class => 'control-label'
+      .controls
+        = f.select :status_id,  options_from_collection_for_select(Status.all, "id", "status_name") ,{},{:class=>"text_field'"}
+    .control-group
+      = f.label "Assign to", :class => 'control-label'
+      .controls
+        = f.select :user_id,  options_from_collection_for_select(User.all, "id", "email") ,{},{:class=>"text_field'"}
+    = f.fields_for :replies,  @query.replies.build ,:html => { :class => 'form-horizontal' } do |h|
+      .control-group
+        = h.label "reply", :class => 'control-label'
+        .controls
+          = h.text_area :reply_description,  :class => 'text_field', :rows=>10
+    .form-actions
+      = link_to t('.back', :default => t("helpers.links.back")), |
+        :back, :class => 'btn'                                   |
+      = f.submit "Reply", :class => 'btn btn-primary'

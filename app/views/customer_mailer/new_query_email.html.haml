@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1 Ticket was successfully created
+    %p
+    %dl.dl-horizontal
+      %dt
+        %strong Ticket UID:
+      %dd= @query.uid
+      Check it there : #{@url}.
+    %p Thanks for joining and have a great day!
