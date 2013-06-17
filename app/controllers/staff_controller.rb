@@ -7,7 +7,8 @@ class StaffController < ApplicationController
   #  @subject_search=Query.subject_search(params[:search], current_user.id)
   #  @description_search=Query.description_search(params[:search], current_user.id)
        puts "="*25
-    unless params[:search].empty?
+    unless params[:search].nil?
+      unless params[:search].empty?
 
     @subject_search = Query.search do
         fulltext params[:search], :fields => :subject
@@ -19,6 +20,7 @@ class StaffController < ApplicationController
       @subject_search=nil
       @description_search=nil
   end
+end
 
 
   end
