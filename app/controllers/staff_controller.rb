@@ -4,10 +4,23 @@ class StaffController < ApplicationController
 
   def index
     @uid_search=Query.uid_search(params[:search])
-    @subject_search=Query.subject_search(params[:search], current_user.id)
-    @description_search=Query.description_search(params[:search], current_user.id)
+  #  @subject_search=Query.subject_search(params[:search], current_user.id)
+  #  @description_search=Query.description_search(params[:search], current_user.id)
        puts "="*25
-    puts @description_search
+    unless params[:search].empty?
+
+    @subject_search = Query.search do
+        fulltext params[:search], :fields => :subject
+    end
+     @description_search = Query.search do
+        fulltext params[:search], :fields => :description
+    end
+    else
+      @subject_search=nil
+      @description_search=nil
+  end
+
+
   end
 
   def unassigned_tickets

@@ -10,6 +10,10 @@ class Query < ActiveRecord::Base
   has_many :changes
   accepts_nested_attributes_for :replies
 
+  searchable do
+    text :subject, :description
+  end
+
   def self.unassigned
     self.where("user_id like ?", "0")
   end

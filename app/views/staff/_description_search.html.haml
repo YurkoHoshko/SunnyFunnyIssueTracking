@@ -1,34 +1,35 @@
-- unless @description_search.nil?
-  - unless @description_search.empty?
-    .well{:style => "float:left; margin:10px",:class=>"span10"}
-      %h3 Search by description
-      %table.table.table-striped
-        %thead
-          %tr
-            %th uid
-            %th customer mail
-            %th customer name
-            %th department
-            %th description
-            %th status
-            %th subject
-            %th assigned to
-            %th= t '.actions', :default => t("helpers.actions")
-        - @description_search.each do |f|
-          %tbody
+- unless @subject_search.nil?
+  - unless @description_search.results.nil?
+    - unless @description_search.results.empty?
+      .well{:style => "float:left; margin:10px",:class=>"span10"}
+        %h3 Search by description
+        %table.table.table-striped
+          %thead
             %tr
-              %td= f.uid
-              %td= f.customer_email
-              %td= f.customer_name
-              %td= f.department.department_name
-              %td= f.description.html_safe
-              %td= f.status.status_name
-              %td= f.subject
-              - if f.user_id=="0"
-                %td Nobody assigned yet
-              - else
-                %td= f.user.email
-              %td
-                = link_to "show", query_path(f),:class => 'btn btn-mini'
-                = link_to t('.edit', :default => t("reply")),                     |
-                  reply_path(f), :class => 'btn btn-mini' |
+              %th uid
+              %th customer mail
+              %th customer name
+              %th department
+              %th description
+              %th status
+              %th subject
+              %th assigned to
+              %th= t '.actions', :default => t("helpers.actions")
+          - @description_search.results.each do |f|
+            %tbody
+              %tr
+                %td= f.uid
+                %td= f.customer_email
+                %td= f.customer_name
+                %td= f.department.department_name
+                %td= f.description.html_safe
+                %td= f.status.status_name
+                %td= f.subject
+                - if f.user_id=="0"
+                  %td Nobody assigned yet
+                - else
+                  %td= f.user.email
+                %td
+                  = link_to "show", query_path(f),:class => 'btn btn-mini'
+                  = link_to t('.edit', :default => t("reply")),                     |
+                    reply_path(f), :class => 'btn btn-mini' |
