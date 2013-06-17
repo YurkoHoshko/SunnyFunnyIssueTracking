@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Query < ActiveRecord::Base
 
    include ActiveModel::Dirty
@@ -13,6 +14,10 @@ class Query < ActiveRecord::Base
   searchable do
     text :subject, :description
   end
+
+  validates_presence_of :customer_email, :customer_name, :description, :subject
+  validates_format_of :customer_name, :with => /^[a-zA-Zа-яА-Я \-\_]+$/, :allow_blank => true
+  validates_format_of :customer_email, :with => /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/, :allow_blank=>true
 
   def self.unassigned
     self.where("user_id like ?", "0")
